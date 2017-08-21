@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:ads="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/scroll"
+      android:scrollbars="vertical"
+      android:layout_width="fill_parent"
+      android:background="@drawable/background"
+      android:layout_height="wrap_content">
+
+      <LinearLayout 
+            android:id="@+id/container"
+            android:orientation="vertical" 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue_tran">
+
+          <!-- Ten Mon -->
+          <TextView
+              android:id="@+id/tenMonId"
+              style="@style/title" />
+
+          <!-- Nguyen Lieu -->
+          <TextView
+                android:id="@+id/lbnguyenlieu"
+                style="@style/header"
+                android:layout_marginTop="5dp"
+                android:text="@string/lb_nguyen_lieu" />
+          <!-- Noi dung Nguyen Lieu -->
+          <TextView
+                android:id="@+id/nguyenLieuId"
+                android:layout_marginBottom="2dp"
+                style="@style/content"/>
+
+          <!--QUANG CAO O DAY-->
+          <com.google.android.gms.ads.AdView
+              xmlns:ads="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/adView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentBottom="true"
+              android:layout_marginBottom="5dp"
+              android:visibility="gone"
+              ads:adSize="BANNER"
+              ads:adUnitId="ca-app-pub-8354689046611467/6738949437">
+          </com.google.android.gms.ads.AdView>
+
+          <!-- Cach lam -->
+          <TextView
+                android:id="@+id/lbcachlam"
+                style="@style/header"
+                android:text="@string/lb_cach_lam"/>
+          <!-- Noi dung cach lam -->
+          <TextView
+                android:id="@+id/cachLamId"
+                style="@style/content"/>
+            
+          <!-- Anh minh hoa -->
+          <LinearLayout
+            android:orientation="vertical" 
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shadow_content_v1">
+	            <ImageView
+	                android:id="@+id/imageMonan"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:scaleType="fitXY"
+	                android:contentDescription="@string/image_description"
+	                />
+          </LinearLayout>
+            
+          <!-- Nguon -->
+          <TextView
+                android:id="@+id/nguonTkId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                android:textSize="@dimen/font_size_content"/>
+      
+      </LinearLayout>
+      
+    
+</ScrollView>

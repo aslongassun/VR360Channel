@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/messageId"
+        android:text="If you love our app, please take a moment to rate it on Goole Play"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:textSize="18dp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/rateBtnId"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:text="Rate Now!" />
+
+    <Button
+        android:id="@+id/rateAfterId"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:text="Rate Later!" />
+
+    <Button
+        android:id="@+id/noRateId"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:text="No Rate!" />
+
+</LinearLayout>
