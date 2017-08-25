@@ -2,8 +2,5 @@
     <string name="app_name">VR 360 Channel</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="lb_nguyen_lieu">Nguyên Liệu</string>
-    <string name="lb_ten_mon">Tên Món</string>
-    <string name="lb_cach_lam">Cách Làm</string>
     <string name="image_description">hinh anh mon an</string>
 </resources>

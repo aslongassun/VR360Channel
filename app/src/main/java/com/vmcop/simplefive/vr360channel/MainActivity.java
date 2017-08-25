@@ -12,69 +12,129 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.vmcop.simplefive.tabfragment.ActionFragment;
-import com.vmcop.simplefive.tabfragment.GirlFragment;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.vmcop.simplefive.model.BeanPost;
+import com.vmcop.simplefive.tabfragment.TabFragment;
 import com.vmcop.simplefive.util.AppRater;
+import com.vmcop.simplefive.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vmcop.simplefive.vr360channel.R.id.picture;
+
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    // private Handler handler = new Handler();
-    // ADMOB
-    private static final String  INTERSTITIALAD_ID = "ca-app-pub-8354689046611467/2212695376";
-    private static final int MINUTE_SHOW_AD = 2;//Min number of minutes
-    private long time_show_ad;
-    private SharedPreferences prefs;
-    InterstitialAd mInterstitialAd;
+    public static InterstitialAd mInterstitialAd;
+    public static RewardedVideoAd adRewardedVideo;
+    public static SharedPreferences prefs;
+    public static SharedPreferences.Editor editor;
+    private static ArrayList<BeanPost> currentBeanPostArrayList;
+    private static int currentPosition;
+    private static View currentView;
+    private static String currentJSONFile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
+        MobileAds.initialize(this, Util.STR_APPLICATION_ID);
 
-        prefs = MainActivity.this.getSharedPreferences("apprater", 0);
-        time_show_ad = prefs.getLong("time_show_ad", 0);
+        prefs = this.getSharedPreferences("apprater", 0);
+        editor = prefs.edit();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(Util.STR_INTERSTITIAL_ID);
+        requestNewInterstitial();
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {}
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+        adRewardedVideo = MobileAds.getRewardedVideoAdInstance(this);
+        loadRewardedVideoAd();
+        adRewardedVideo.setRewardedVideoAdListener(new RewardedVideoAdListener(){
+            @Override
+            public void onRewarded(RewardItem reward) {
+                currentBeanPostArrayList.get(currentPosition).setIs_default_show(true);
+                editor.putBoolean(currentJSONFile + "is_default_show" + currentPosition, true);
+                editor.commit();
+
+                ImageView tempImageView = (ImageView) currentView.findViewById(picture);
+
+//                new DownloadImageTask(tempImageView)
+//                        .execute(currentBeanPostArrayList.get(currentPosition).getImage_name());
+
+                Glide.with(getApplicationContext())
+                        .load(currentBeanPostArrayList.get(currentPosition).getImage_name())
+//                        .skipMemoryCache(true)
+//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                        .into(tempImageView);
+
+//                Picasso.with(getApplicationContext())
+//                        .load(currentBeanPostArrayList.get(currentPosition).getImage_name())
+//                        //.memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .into(tempImageView);
+
+                TextView tempTextView = (TextView) currentView.findViewById(R.id.text);
+                tempTextView.setText(currentBeanPostArrayList.get(currentPosition).getTitle());
+            }
+            @Override
+            public void onRewardedVideoAdClosed() {
+                loadRewardedVideoAd();
+            }
+            @Override
+            public void onRewardedVideoAdLeftApplication() {}
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int errorCode) {}
+            @Override
+            public void onRewardedVideoAdLoaded() {}
+            @Override
+            public void onRewardedVideoAdOpened() {}
+            @Override
+            public void onRewardedVideoStarted() {}
+        });
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(INTERSTITIALAD_ID);
-        requestNewInterstitial();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Long calTime = time_show_ad + (MINUTE_SHOW_AD * 60 * 1000);
-                if(mInterstitialAd.isLoaded()){
-                    if(System.currentTimeMillis() >= calTime){
-                        mInterstitialAd.show();
-                        time_show_ad = System.currentTimeMillis();
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putLong("time_show_ad", time_show_ad);
-                        editor.commit();
-                    }
-                } else {
-                    requestNewInterstitial();
+                long time_show_ad = prefs.getLong("time_show_ad", 0);
+                Long calTime = time_show_ad + (Util.MINUTE_SHOW_AD * 60 * 1000);
+                if(System.currentTimeMillis() >= calTime && mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                    time_show_ad = System.currentTimeMillis();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putLong("time_show_ad", time_show_ad);
+                    editor.commit();
                 }
-
-//                if(mAd.isLoaded()){
-//                    mAd.show();
-//                }
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+
     }
 
 
@@ -82,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                showDialog(MainActivity.this, "", "Do you want to quit app ?");
-                AppRater.app_launched(MainActivity.this);
+                showDialog(this, "", "Do you want to quit app ?");
+                AppRater.app_launched(this);
                 return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -107,8 +167,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ActionFragment(), "Action");
-        adapter.addFragment(new GirlFragment(), "Teen Girl");
+
+        TabFragment tab1 = new TabFragment();
+        tab1.setJSONFile(Util.ACTION_FRAGMENT);
+        tab1.setTabName("Action");
+        tab1.setHaveInterstitialAd(false);
+
+        TabFragment tab2 = new TabFragment();
+        tab2.setJSONFile(Util.GIRL_FRAGMENT);
+        tab2.setTabName("Teen Girl");
+
+        adapter.addFragment(tab1, tab1.getTabName());
+        adapter.addFragment(tab2, tab2.getTabName());
+
         viewPager.setAdapter(adapter);
     }
 
@@ -139,11 +210,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void requestNewInterstitial() {
+    public static void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("91BAF0D14311747AD628F5A5F9629E31")
+                .addTestDevice(Util.DEVICE_ID)
                 .build();
         mInterstitialAd.loadAd(adRequest);
+    }
+    public static void loadRewardedVideoAd() {
+        adRewardedVideo.loadAd(Util.STR_REWARD_VIDEO_CODE, new AdRequest.Builder().addTestDevice(Util.DEVICE_ID).build());
+    }
+    public static ArrayList<BeanPost> getCurrentBeanPostArrayList() {
+        return currentBeanPostArrayList;
+    }
+
+    public static void setCurrentBeanPostArrayList(ArrayList<BeanPost> currentBeanPostArrayList) {
+        MainActivity.currentBeanPostArrayList = currentBeanPostArrayList;
+    }
+
+    public static int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public static void setCurrentPosition(int currentPosition) {
+        MainActivity.currentPosition = currentPosition;
+    }
+
+    public static View getCurrentView() {
+        return currentView;
+    }
+
+    public static void setCurrentView(View currentView) {
+        MainActivity.currentView = currentView;
+    }
+
+    public static String getCurrentJSONFile() {
+        return currentJSONFile;
+    }
+
+    public static void setCurrentJSONFile(String currentJSONFile) {
+        MainActivity.currentJSONFile = currentJSONFile;
     }
 }
 
@@ -158,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 // QUANG CAO START
         /*
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(INTERSTITIALAD_ID);
+        mInterstitialAd.setAdUnitId(STR_INTERSTITIAL_ID);
         requestNewInterstitial();
 
         mInterstitialAd.setAdListener(new AdListener() {

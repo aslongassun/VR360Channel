@@ -1,7 +1,7 @@
 [
   {
     "title":"360 Amazing videos",
-    "is_default_show":"true",
+    "is_default_show":"false",
     "image_name":"https://yt3.ggpht.com/-S75LNV4pIBE/AAAAAAAAAAI/AAAAAAAAAAA/tF3-ANjeGK0/s288-c-k-no-mo-rj-c0xffffff/photo.jpg",
     "nguon_tk":"https://www.youtube.com/channel/UCscq4bvoxtNMildOdVC0RWw",
     "ngay_tao":"19/08/2017"
@@ -15,7 +15,7 @@
   },
   {
     "title":"360 VR Experiences",
-    "is_default_show":"true",
+    "is_default_show":"false",
     "image_name":"https://yt3.ggpht.com/-mRnkFrrWDN4/AAAAAAAAAAI/AAAAAAAAAAA/vnSto6_h-F8/s288-c-k-no-mo-rj-c0xffffff/photo.jpg",
     "nguon_tk":"https://www.youtube.com/channel/UC3quZF6Y1K8iB10k2YBFtiA",
     "ngay_tao":"19/08/2017"

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Util {
-	public static final int NUMBER_OF_DEFAULT_SHOW = 6;
 	public final static String GIRL_FRAGMENT = "girl_fragment";
 	public final static String ACTION_FRAGMENT = "action_fragment";
 
@@ -14,9 +13,12 @@ public class Util {
 	public static final String CONS_SHOW_PART = "- ";
 
 	public static final String CONS_FONT_GRID_MONAN = "fonts/DancingScript-Bold.ttf";
-	public static final String CONS_FONT_TITLE_NAME_MONAN = "fonts/DancingScript-Bold.ttf";
-	public static final String CONS_FONT_TTILE_CHILD_MONAN = "fonts/Nunito-Bold.ttf";
-	public static final String CONS_FONT_DETAIL_MONAN = "fonts/YanoneKaffeesatz-Regular.ttf";
+
+	public static final String STR_APPLICATION_ID = "ca-app-pub-8354689046611467~8985809679";
+	public static final String STR_REWARD_VIDEO_CODE = "ca-app-pub-8354689046611467/4063110891";
+	public static final String STR_INTERSTITIAL_ID = "ca-app-pub-8354689046611467/2212695376";
+	public static final String DEVICE_ID = "91BAF0D14311747AD628F5A5F9629E31";
+	public static final int MINUTE_SHOW_AD = 1;//Min number of minutes
 
 	public static String loadJSONFromAsset( AssetManager inAssetManager, String jsonFileName) {
         String json = null;

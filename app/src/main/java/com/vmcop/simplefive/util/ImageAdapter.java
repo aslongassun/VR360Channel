@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.vmcop.simplefive.model.BeanPost;
 import com.vmcop.simplefive.vr360channel.R;
 
@@ -66,17 +65,48 @@ public final class ImageAdapter extends BaseAdapter {
         name.setTypeface(typeface_grid_monan);
         Item item = getItem(i);
 
+        name.setDrawingCacheEnabled(false);
+        picture.setDrawingCacheEnabled(false);
+
         if(item.is_default_show){
             name.setText(item.name);
             Glide.with(myContext)
                     .load(item.imageUrl)
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                     .into(picture);
+//            Picasso.with(myContext)
+//                    .load(item.imageUrl)
+//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                    .into(picture);
+//            try {
+//                URL url  = new URL(item.imageUrl);
+//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                picture.setImageBitmap(bmp);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            new DownloadImageTask(picture)
+//                    .execute(item.imageUrl);
         } else {
+            //name.setText(item.name);
             name.setText("See advertise to open");
+            //Glide.get(myContext).clearDiskCache();
+            //Glide.get(myContext).clearMemory();
             Glide.with(myContext)
                     .load(R.drawable.question)
-                    .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                     .into(picture);
+
+            //picture.setImageResource(R.drawable.question);
+
+//            Picasso.with(myContext)
+//                    .load(R.drawable.question)
+//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                    .into(picture);
         }
 //        Glide.with(myContext)
 //                .load(Uri.parse(item.imageUrl))
