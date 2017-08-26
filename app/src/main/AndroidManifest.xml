@@ -37,12 +37,6 @@
             android:theme="@android:style/Theme.Translucent" />
         <!-- android:theme="@style/VinhTheme" -->
         <!-- android:theme="@android:style/Theme.Translucent" -->
-        <!--<activity android:name=".WebViewActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
     </application>
 
 </manifest>

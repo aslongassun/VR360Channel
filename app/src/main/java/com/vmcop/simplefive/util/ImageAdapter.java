@@ -72,46 +72,15 @@ public final class ImageAdapter extends BaseAdapter {
             name.setText(item.name);
             Glide.with(myContext)
                     .load(item.imageUrl)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                    //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                     .into(picture);
-//            Picasso.with(myContext)
-//                    .load(item.imageUrl)
-//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                    .into(picture);
-//            try {
-//                URL url  = new URL(item.imageUrl);
-//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                picture.setImageBitmap(bmp);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            new DownloadImageTask(picture)
-//                    .execute(item.imageUrl);
         } else {
-            //name.setText(item.name);
             name.setText("See advertise to open");
-            //Glide.get(myContext).clearDiskCache();
-            //Glide.get(myContext).clearMemory();
             Glide.with(myContext)
                     .load(R.drawable.question)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                    //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                     .into(picture);
-
-            //picture.setImageResource(R.drawable.question);
-
-//            Picasso.with(myContext)
-//                    .load(R.drawable.question)
-//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                    .into(picture);
         }
-//        Glide.with(myContext)
-//                .load(Uri.parse(item.imageUrl))
-//                .into(picture);
-
         return myView;
     }
 

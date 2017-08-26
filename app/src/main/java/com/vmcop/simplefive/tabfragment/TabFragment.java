@@ -80,16 +80,10 @@ public class TabFragment extends Fragment{
                                                 int position, long id) {
 
                             MainActivity.setCurrentBeanPostArrayList(beanPostArrayList);
+                            MainActivity.setCurrentGridView(gridView);
                             MainActivity.setCurrentJSONFile(JSONFile);
                             MainActivity.setCurrentPosition(position);
                             MainActivity.setCurrentView(v);
-
-
-//                            ImageView tempImageView = (ImageView) v.findViewById(picture);
-//                            new DownloadImageTask(tempImageView)
-//                                    .execute(beanPostArrayList.get(position).getImage_name());
-//                            TextView tempTextView = (TextView) v.findViewById(R.id.text);
-//                            tempTextView.setText(beanPostArrayList.get(position).getTitle());
 
                             if(beanPostArrayList.get(position).getIs_default_show()) {
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(beanPostArrayList.get(position).getNguon_tk()));
@@ -99,6 +93,9 @@ public class TabFragment extends Fragment{
                                     MainActivity.adRewardedVideo.show();
                                 }
                             }
+
+
+                           // currentGridView.invalidateViews();
 
                         }
                     });

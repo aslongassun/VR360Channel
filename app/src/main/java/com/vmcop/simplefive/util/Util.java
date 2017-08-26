@@ -36,12 +36,7 @@ public class Util {
         return json;
     }
 
-	/*
-	public static int getImageId(Context context, String imageName) {
-	    return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
-		//return context.getResources().getIdentifier("assets/images/mon_an/" + imageName, null, context.getPackageName());
-	}
-	*/
+
 	public static String getImageUrl(String imageFolder, String imageName) {
 		return "file:///android_asset/images/" + imageFolder + "/" + imageName + ".jpg";
 	}

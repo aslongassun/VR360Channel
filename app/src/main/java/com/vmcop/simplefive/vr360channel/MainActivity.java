@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private static int currentPosition;
     private static View currentView;
     private static String currentJSONFile;
+    private static GridView currentGridView;
+    private ViewPagerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,23 +79,21 @@ public class MainActivity extends AppCompatActivity {
 
                 ImageView tempImageView = (ImageView) currentView.findViewById(picture);
 
-//                new DownloadImageTask(tempImageView)
-//                        .execute(currentBeanPostArrayList.get(currentPosition).getImage_name());
-
                 Glide.with(getApplicationContext())
                         .load(currentBeanPostArrayList.get(currentPosition).getImage_name())
 //                        .skipMemoryCache(true)
 //                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                        //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .into(tempImageView);
-
-//                Picasso.with(getApplicationContext())
-//                        .load(currentBeanPostArrayList.get(currentPosition).getImage_name())
-//                        //.memoryPolicy(MemoryPolicy.NO_CACHE)
-//                        .into(tempImageView);
 
                 TextView tempTextView = (TextView) currentView.findViewById(R.id.text);
                 tempTextView.setText(currentBeanPostArrayList.get(currentPosition).getTitle());
+
+                //currentGridView.invalidateViews();
+                //adapter.notifyDataSetChanged();
+                //currentGridView.invalidateViews();
+                //setupViewPager(viewPager);
+                //tabLayout.setupWithViewPager(viewPager);
             }
             @Override
             public void onRewardedVideoAdClosed() {
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         TabFragment tab1 = new TabFragment();
         tab1.setJSONFile(Util.ACTION_FRAGMENT);
@@ -249,6 +249,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setCurrentJSONFile(String currentJSONFile) {
         MainActivity.currentJSONFile = currentJSONFile;
+    }
+    public static GridView getCurrentGridView() {
+        return currentGridView;
+    }
+    public static void setCurrentGridView(GridView currentGridView) {
+        MainActivity.currentGridView = currentGridView;
     }
 }
 
