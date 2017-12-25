@@ -5,10 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 import com.vmcop.simplefive.vr360channel.R;
 
 import static com.vmcop.simplefive.vr360channel.MainActivity.editor;
@@ -49,13 +48,14 @@ public class AppRater {
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
 
         final Dialog dialog = new Dialog(mContext);
+        dialog.show();
         dialog.setTitle("Rate " + APP_TITLE);
         dialog.setCancelable(false);
-        TextView titleView = (TextView)dialog.findViewById(android.R.id.title);
-        titleView.setGravity(Gravity.CENTER);
+//        TextView titleView = (TextView)dialog.findViewById(android.R.id.title);
+//        titleView.setGravity(Gravity.CENTER);
 
         dialog.setContentView(R.layout.app_rate);
-        dialog.show();
+
 
         Button rateBtnId = (Button)dialog.findViewById(R.id.rateBtnId);
         rateBtnId.setOnClickListener(new View.OnClickListener() {

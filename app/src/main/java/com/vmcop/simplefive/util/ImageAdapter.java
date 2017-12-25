@@ -68,6 +68,12 @@ public final class ImageAdapter extends BaseAdapter {
         name.setDrawingCacheEnabled(false);
         picture.setDrawingCacheEnabled(false);
 
+        // 2017/12/25 Vinh Hua Quoc modified start
+        name.setText(item.name);
+        Glide.with(myContext)
+                .load(item.imageUrl)
+                .into(picture);
+        /*
         if(item.is_default_show){
             name.setText(item.name);
             Glide.with(myContext)
@@ -81,6 +87,9 @@ public final class ImageAdapter extends BaseAdapter {
                     //.signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                     .into(picture);
         }
+        */
+        // 2017/12/25 Vinh Hua Quoc modified end
+
         return myView;
     }
 

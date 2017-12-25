@@ -23,8 +23,6 @@ import com.vmcop.simplefive.vr360channel.R;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.vmcop.simplefive.vr360channel.MainActivity.prefs;
-
 
 public class TabFragment extends Fragment{
     private String JSONFile;
@@ -58,12 +56,15 @@ public class TabFragment extends Fragment{
             protected Void doInBackground(Void... voids) {
                 Type listType = new TypeToken<ArrayList<BeanPost>>() {}.getType();
                 beanPostArrayList = new GsonBuilder().create().fromJson(Util.loadJSONFromAsset(getContext().getResources().getAssets(), JSONFile + ".json"), listType);
+                // 2017/12/25 Vinh Hua Quoc deleted
+                /*
                 for(int i = 0; i < beanPostArrayList.size(); i ++){
                     Boolean tempData = prefs.getBoolean(JSONFile + "is_default_show" + i, beanPostArrayList.get(i).getIs_default_show());
                     MainActivity.editor.putBoolean(JSONFile + "is_default_show" + i, tempData);
                     beanPostArrayList.get(i).setIs_default_show(tempData);
                 }
                 MainActivity.editor.commit();
+                */
                 return null;
             }
 
@@ -85,15 +86,19 @@ public class TabFragment extends Fragment{
                             MainActivity.setCurrentPosition(position);
                             MainActivity.setCurrentView(v);
 
+                            // 2017/12/25 Vinh Hua Quoc modified start
+                            /*
                             if(beanPostArrayList.get(position).getIs_default_show()) {
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(beanPostArrayList.get(position).getNguon_tk()));
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(beanPostArrayList.get(position).getNguon_tk() + "/videos"));
                                 startActivity(browserIntent);
                             } else {
                                 if(MainActivity.adRewardedVideo.isLoaded()){
                                     MainActivity.adRewardedVideo.show();
                                 }
-                            }
-
+                            }*/
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(beanPostArrayList.get(position).getNguon_tk()));
+                            startActivity(browserIntent);
+                            // 2017/12/25 Vinh Hua Quoc modified end
 
                            // currentGridView.invalidateViews();
 
